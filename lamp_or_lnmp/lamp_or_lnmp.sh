@@ -20,10 +20,10 @@ expr $num + 1 &>/dev/null
 
 [ "$num" -eq "1" ] && {
 	# echo ~/Shell_Programs/lamp_or_lnmp/lamp.sh
-	[ -f ~/Shell_Programs/lamp_or_lnmp/lamp.sh ] && {
+	[ -f ~/Shell_Program/lamp_or_lnmp/lamp.sh ] && {
 		echo "Install lamp....wait......"
 		sleep 2;
-		bash ~/Shell_Programs/lamp_or_lnmp/lamp.sh
+		bash ~/Shell_Program/lamp_or_lnmp/lamp.sh
 
 	} || {
 		echo "lamp.sh安装程序不存在或不可执行！"
@@ -34,10 +34,10 @@ expr $num + 1 &>/dev/null
 # 如果输入的2，进行安装程序lnmp.sh的检测和执行
 [ "$num" -eq "2" ] && {
 
-	[ -f ~/Shell_Programs/lamp_or_lnmp/lnmp.sh ] && {
+	[ -f ~/Shell_Program/lamp_or_lnmp/lnmp.sh ] && {
 		echo "Install lnmp...wait...."
 		sleep 2;
-		bash ~/Shell_Programs/lamp_or_lnmp/lnmp.sh
+		bash ~/Shell_Program/lamp_or_lnmp/lnmp.sh
 	} || {
 		echo "lnmp.sh安装程序不存在或不可执行！"
 		exit 1
