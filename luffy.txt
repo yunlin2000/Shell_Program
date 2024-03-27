@@ -1,0 +1,12 @@
+I am oldboy teacher
+I teach linux.
+I like python.
+
+My QQ is 113753452.
+
+My name is Ken.zhao.
+
+Our school website is http://www.mzsz.cn
+
+
+# 注释行，我不会被执行，一般被程序员用作解释信息。
