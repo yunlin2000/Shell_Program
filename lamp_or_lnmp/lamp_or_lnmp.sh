@@ -19,7 +19,7 @@ expr $num + 1 &>/dev/null
 # 如果输入的1，则进行安装程序lamp.sh检测和运行安装
 
 [ "$num" -eq "1" ] && {
-	# echo ~/Shell_Programs/lamp_or_lnmp/lamp.sh
+	# echo ~/Shell_Program/lamp_or_lnmp/lamp.sh
 	[ -f ~/Shell_Program/lamp_or_lnmp/lamp.sh ] && {
 		echo "Install lamp....wait......"
 		sleep 2;
