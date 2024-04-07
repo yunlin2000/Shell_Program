@@ -169,4 +169,6 @@ awk -F "[ :]" '{print $4}' tel.txt
 548-5258
 
 926-3456
+#查找Tom的电话号码
+awk -F"[ :]" '$1=="Tom"{print $1,$3,$4}' tel.txt
 
