@@ -1,0 +1,18 @@
+1  I am oldboy teacher
+2  I teach linux.
+3  I like python.
+4
+5  My QQ is 113753452.
+6
+7  My name is Ken.zhao.
+8
+9  Our school website is http://www.mzsz.cn
+10
+11  Our school website is http://www.mzsz.cn
+12  Our school website is http://www.mzsz.cn
+13  Our school website is http://www.mzsz.cn
+14  Our school website is http://www.mzsz.cn
+15  Our school website is http://www.mzsz.cn
+16  Our school website is http://www.mzsz.cn
+17
+18  # 注释行，我不会被执行，一般被程序员用作解释信息。
