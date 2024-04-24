@@ -1,3 +1,9 @@
+
+
+
+
+
+
 sed实例：
  #将文件中空白字符开头的行，添加注释符
 [ops@Server Shell_Programs]$ cat lovers.txt -n
@@ -7,7 +13,7 @@ sed实例：
      4   He loves his lovers.
      5  #she loves her cat
      6  i want ride my bike
-     7
+    7
      8
      9  
 [ops@Server Shell_Programs]$ sed 's/^[[:space:]]/#/g' lovers.txt -n
@@ -141,118 +147,240 @@ test /home/test
 #爱的魔力转圈圈10 爱的魔力转圈圈11 爱的魔力转圈圈12
 #爱的魔力转圈圈13 爱的魔力转圈圈14 爱的魔力转圈圈15
 
- #显示tel.txt中所有电话号码
+ #显示tel.txt中所有电话号码并且去除空行
  cat tel.txt
 Mike Harrington:[510] 548-1278:250:100:175
 
-Christian Dobbins:[408] 538-2358:155:90:201Susan Dalsass:[206]654-6279:250:60:50
+Christian Dobbins:[408] 538-2358:155:90:201
 
-Archie McNichol:[206] 548-1348:250:100:175Jody Savage:[206]548-1278:15:188:150Guy Quigley:[916]343-6410:250:100:175
+Susan Dalsass:[206]654-6279:250:60:50
 
-Dan Savage:[406] 298-7744:450:300:275Nancy McNeil:[206]548-1278:250:80:75
+Archie McNichol:[206] 548-1348:250:100:175
+
+Jody Savage:[206]548-1278:15:188:150
+
+Guy Quigley:[916]343-6410:250:100:175
+
+Dan Savage:[406] 298-7744:450:300:275
+
+Nancy McNeil:[206]548-1278:250:80:75
 
 John Goldenrod:[916] 348-4278:250:100:175
 
 Chet Main:[510] 548-5258:50:95:135
 
-awk -F "[ :]" '{print $4}' tel.txt
+awk -F "[ :]" '!/^[[:space:]]*$/{print $4}' tel.txt
 548-1278
-
 538-2358
-
+654-6279
 548-1348
-
+548-1278
+343-6410
 298-7744
-
+548-1278
 348-4278
-
 548-5258
-
 926-3456
-#查找Tom的电话号码
-awk -F"[ :]" '$1=="Tom"{print $1,$3,$4}' tel.txt
-awk -F"[ :]" '/^Tom/{print $1,$3,$4}' tel.txt
-#显示nancy的姓名，区号，电话
-cat tel.txt  
-Mike Harrington:[510] 548-1278:250:100:175
-
-Christian Dobbins:[408] 538-2358:155:90:201
-
-Susan Dalsass:[206] 654-6279:250:60:50
-
-Archie McNichol:[206] 548-1348:250:100:175
-
-Jody Savage:[206] 548-1278:15:188:150
-
-Guy Quigley:[916] 343-6410:250:100:175
-
-Dan Savage:[406] 298-7744:450:300:275
-
-Nancy McNeil:[206] 548-1278:250:80:75
-
-John Goldenrod:[916] 348-4278:250:100:175
-
-Chet Main:[510] 548-5258:50:95:135
-
-Tom Savage:[408] 926-3456:250:168:200
-
-Elizbeth stachelin:[916] 440-1763:175:75:300
-
-awk -F"[ :]" '/^Nancy/{print $1,$2,$3,$4}' tel.txt 
-Nancy McNeil [206] 548-1278
+440-1763
 
 
-#显示所有D开头的姓
-cat tel.txt                       
-Mike Harrington:[510] 548-1278:250:100:175
 
-Christian Dobbins:[408] 538-2358:155:90:201
 
-Susan Dalsass:[206] 654-6279:250:60:50
 
-Archie McNichol:[206] 548-1348:250:100:175
+20240422：
+案例03:取出stat /etc/hosts中的0644或644
+[root@chaogelinux log]# stat /etc/hosts
+  文件："/etc/hosts"
+  大小：158             块：8          IO 块：4096   普通文件
+设备：fd00h/64768d      Inode：16784041    硬链接：1
+权限：(0644/-rw-r--r--)  Uid：(    0/    root)   Gid：(    0/    root)
+环境：system_u:object_r:net_conf_t:s0
+最近访问：2024-04-22 07:27:08.664045499 +0800
+最近更改：2013-06-07 22:31:32.000000000 +0800
+最近改动：2024-03-22 07:39:40.488233554 +0800
+创建时间：-
+[root@chaogelinux log]# stat /etc/hosts|sed -n '4p'
+权限：(0644/-rw-r--r--)  Uid：(    0/    root)   Gid：(    0/    root)
+[root@chaogelinux log]# stat /etc/hosts|sed -n '4p'|sed -r 's#^.*\(([0-9]+).*$#\1#g'
 
-Jody Savage:[206] 548-1278:15:188:150
+##排除/etc/ssh/sshd_config(先复制到用户家目录)文件中的空行和以#开头的行
+su root
+cp /etc/ssh/sshd_config sshd_config
+1.egrep
+egrep -v '^$|^#' sshd_config   #-v:反转
+2.sed
+sed -r '/^$|^#/d' sshd_config    #-r:扩展正则，因为用到|，它属于扩展正则符号
+3.awk
+awk '!/^$|^#/'  sshd_config   #！：取反含义
+##增删改查之增加
+#在sed.txt文件第3行后增加一行
+[root@chaogelinux Shell_Program]# sed '3a 999,lidao007,UFO' sed.txt     #a:append追加的含义，在指定行后增加一行内容
+101,oldboy,CEO
+102,oldbao.CTO
+103,abd,CIO
+999,lidao007,UFO
+104,yy,CFO
+105,feixue.CIO
+110,oldboy.COCO
+#在sed.txt文件第3行之前增加一行
+[root@chaogelinux Shell_Program]# sed '3i 999,lidao007,UFO' sed.txt     #i:insert在指定行之前增加一行
+101,oldboy,CEO
+102,oldbao.CTO
+999,lidao007,UFO
+103,abd,CIO
+104,yy,CFO
+105,feixue.CIO
+110,oldboy.COCO
+##替换sed.txt文件第3行为
+ [root@chaogelinux Shell_Program]# sed '3c 999,lidao007,UFO' sed.txt     #c:replace替换为
+101,oldboy,CEO
+102,oldbao.CTO
+999,lidao007,UFO
+104,yy,CFO
+105,feixue.CIO
+110,oldboy.COCO
 
-Guy Quigley:[916] 343-6410:250:100:175
+##sed总结
+1.sed查找与替换
+2.sed后向引用
+3.sed增加
+4.sed删除
+sed过滤，替换
+正则：^    $    ^$     .*     []+     |
+过滤：	行号，行号范围
+	模糊过滤或查询
+	模糊范围
+替换：
+	格式：‘s###g’
+	修改文件内容 -i   -i.bak
+	反向引用（后向引用）
+		类似于awk取列，取出某行中指定内容
+		本质：通过正则进行匹配，通过()进行分组，在后面使用\1 \数字获取前面分组的内容（最多9个分组）。
+删除：d,删除一行
+增加：cai
+	a  append    #如果增加多行，加上\n即可
+	i   insert
+	c  replace
+选项：
+	-n	#关闭默认显示
+	-i 	-i.bak   #修改文件和备份
+	-r	#使用扩展正则
+awk使用实例：
+#案例01：取出/etc/passwd文件中的第一行
+awk 'NR==1{print $0}' /etc/passwd    
+root:x:0:0:root:/root:/bin/bash
+讲解：
+NR Number of Record  记录号，行号
+== 表示等于
+{print $0}   输出正行内容  $0表示当前行的内容。
 
-Dan Savage:[406] 298-7744:450:300:275
+上面例子也可简写为：
+awk 'NR==1' /etc/passwd
 
-Nancy McNeil:[206] 548-1278:250:80:75
+#案例02：取出第二行到第五行的内容
+awk 'NR>=2 && NR<=5' /etc/passwd
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+解析：
+>=   <=    >   <   !=     ==    大于等于 小于等于...
+&& 表示并且
+|| 表示或者
 
-John Goldenrod:[916] 348-4278:250:100:175
 
-Chet Main:[510] 548-5258:50:95:135
+#案例03：过滤出/etc/passwd文件中包含root或nobody的行
+ awk '/root|nobody/' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
+ 
+sed实现：
+sed -r -n '/root|nobody/p' /etc/passwd
+egrep实现：
+ egrep 'root|nobody' /etc/passwd
 
-Tom Savage:[408] 926-3456:250:168:200
+ #案例04：取出从包含root的行到包含nobody的行
+ awk '/root/,/nobody/' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
 
-Elizbeth stachelin:[916] 440-1763:175:75:300
+sed实现：
+sed -n -r '/root/,/nobody/p' /etc/passwd
 
-awk -F"[ :]" '$2~/^D/{print $2}' tel.txt
-Dobbins
-Dalsass
 
-#显示所有区号是916的人名
-awk -F"[ :]" '$3~/\[916\]/{print $1}' tel.txt
-Guy
-John
-Elizbeth
+#案例05：取出/etc/passwd中第三列大于等于1000的行
+awk -F: '$3>=1000' /etc/passwd
+ops:x:1000:1000:ops:/home/ops:/bin/bash
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
 
-#显示mike的捐款信息,并在每一款项前增加美元符号       awk -F"[ :]" '/^Mike/{print "$"$(NF-2),"$"$(NF-1),"$"$NF}' tel.txt
-$250 $100 $175
+以上5个awk实例小结：
+awk +NR 取出指定的行，指定范围的行
+awk + //过滤
+awk +其他变量功能用于精确过滤.(讲完取列就可以使用)
 
-#显示所有人姓+逗号+名
-awk -F"[ :]" '!/^[[:space:]]$/{print $2","$1}' tel.txt
-Harrington,Mike
-Dobbins,Christian
-Dalsass,Susan
-McNichol,Archie
-Savage,Jody
-Quigley,Guy
-Savage,Dan
-McNeil,Nancy
-Goldenrod,John
-Main,Chet
-Savage,Tom
-stachelin,Elizbeth
 
+awk取列操作：
+实例01： #使用awk取出ls -lh的大小列和最后一列
+ls -lh | awk '{print $5,$NF}'
+ 12K
+15 a
+57 bb
+3.0K pass.txt
+4.0K Shell_Program
+
+awk中 $数字，表示取列，$1 第1列 $0表示这一行
+$NF 最后一列
+NF Number of Field 每行有多少列
+$(NF-1)取出倒数第2列，一般用于正向取列数发生变化或数字过大。
+实例02：取出/etc/passwd中的第1列，第3列和最后一列
+awk取列的时候，默认是通过空白符进行分割的
+空白字符：空格，连续空格，tab键
+但是一些时候使用默认分隔符不够了，需要我们手动指定分隔符，通过-F选项指定。
+未来我们想快速取出想要的内容，选择趁手工具（选好分隔符）
+选择分隔符建议：看你目标两边是啥。
+
+ awk -F':' '{print $1,$3,$NF}' /etc/passwd|column -t
+root                 	0      /bin/bash
+bin                  	1      /sbin/nologin
+daemon              	2      /sbin/nologin
+adm                  	3      /sbin/nologin
+lp                   	4      /sbin/nologin
+sync                 	5      /bin/sync
+
+|column -t 对齐
+
+实例03：取出ip地址（指定复杂分隔符）
+[ops@chaogelinux ~]$ ip a s dev ens33
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:13:63:fc brd ff:ff:ff:ff:ff:ff
+    inet 192.168.10.116/24 brd 192.168.10.255 scope global dynamic ens33
+       valid_lft 4693sec preferred_lft 4693sec
+    inet6 fe80::20c:29ff:fe13:63fc/64 scope link
+       valid_lft forever preferred_lft forever
+
+ip a s dev ens33|awk -F'[ /]+' 'NR==3{print $3}'
+192.168.10.116
+
+
+小结：
+如果是空格，连续空格，直接使用awk取列即可，$1,$2,$NF
+其他清空需要通过指定分隔符+正则实现  [ ]   [ ]+   |
+
+
+
+实例04：取出/etc/hosts的权限属性
+stat /etc/hosts|awk -F'[(/]+' 'NR==4{print $2}'
+0644
