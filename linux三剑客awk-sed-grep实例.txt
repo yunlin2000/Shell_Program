@@ -1,11 +1,5 @@
-
-
-
-
-
-
 sed实例：
- #将文件中空白字符开头的行，添加注释符
+#将文件中空白字符开头的行，添加注释符
 [ops@Server Shell_Programs]$ cat lovers.txt -n
      1   I like my lover.
      2  I love my lover.
@@ -13,7 +7,7 @@ sed实例：
      4   He loves his lovers.
      5  #she loves her cat
      6  i want ride my bike
-    7
+     7
      8
      9  
 [ops@Server Shell_Programs]$ sed 's/^[[:space:]]/#/g' lovers.txt -n
